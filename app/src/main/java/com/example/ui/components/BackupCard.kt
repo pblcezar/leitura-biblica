@@ -161,7 +161,7 @@ fun BackupCard(
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Cópia de Segurança",
+                        text = "Backup no Google Drive",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Serif
@@ -169,14 +169,43 @@ fun BackupCard(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "Guarde seu progresso para não perder suas leituras ou transferir para outro celular",
+                        text = "Guarde suas leituras e anotações com segurança na sua conta do Google",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Explanation box for non-developers
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.35f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            ) {
+                Row(
+                    modifier = Modifier.padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CloudDownload,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "Toque em 'Salvar no Drive' e selecione a pasta do seu Google Drive. Para recuperar em outro celular, use 'Restaurar do Drive'.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -194,12 +223,12 @@ fun BackupCard(
                         .testTag("btn_export_backup")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.FileUpload,
-                        contentDescription = "Salvar Cópia",
-                        modifier = Modifier.size(16.dp)
+                        imageVector = Icons.Default.CloudUpload,
+                        contentDescription = "Salvar no Drive",
+                        modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(text = "Salvar Cópia", style = MaterialTheme.typography.labelMedium)
+                    Text(text = "Salvar no Drive", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                 }
 
                 Button(
@@ -216,12 +245,12 @@ fun BackupCard(
                         .testTag("btn_import_backup")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.FileDownload,
-                        contentDescription = "Restaurar",
-                        modifier = Modifier.size(16.dp)
+                        imageVector = Icons.Default.CloudDownload,
+                        contentDescription = "Restaurar do Drive",
+                        modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(text = "Restaurar Cópia", style = MaterialTheme.typography.labelMedium)
+                    Text(text = "Restaurar do Drive", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                 }
             }
         }

@@ -1,1 +1,6 @@
 /build
+/.gradle
+/.kotlin
+/.build-outputs
+*.apk
+*.aab
