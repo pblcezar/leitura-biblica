@@ -1,0 +1,9 @@
+# Ensure binary files are not corrupted by line ending conversions
+*.jar binary
+*.png binary
+*.webp binary
+*.keystore binary
+
+# Text files line ending configuration
+gradlew text eol=lf
+*.bat text eol=crlf
