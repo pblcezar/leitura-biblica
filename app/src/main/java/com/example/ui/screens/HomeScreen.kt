@@ -49,6 +49,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material.icons.filled.BrightnessAuto
+import androidx.compose.material.icons.filled.NightsStay
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.example.ui.theme.AppThemeMode
 import com.example.ui.components.BackupCard
 import com.example.ui.components.HeaderBanner
 import com.example.ui.components.ProgressCard
@@ -68,8 +78,10 @@ fun HomeScreen(
     val activePlan by viewModel.activePlan.collectAsStateWithLifecycle()
     val readings by viewModel.activePlanReadings.collectAsStateWithLifecycle()
     val completedCount by viewModel.activePlanCompletedCount.collectAsStateWithLifecycle()
+    val currentThemeMode by viewModel.themeMode.collectAsStateWithLifecycle()
 
     val streak = viewModel.calculateStreak(readings)
+    var showThemeMenu by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -101,6 +113,84 @@ fun HomeScreen(
                     }
                 },
                 actions = {
+                    Box {
+                        IconButton(
+                            onClick = { showThemeMenu = true },
+                            modifier = Modifier.testTag("theme_toggle_button")
+                        ) {
+                            val (icon, tint) = when (currentThemeMode) {
+                                AppThemeMode.LIGHT -> Icons.Default.WbSunny to Color(0xFFD97706)
+                                AppThemeMode.DARK -> Icons.Default.NightsStay to MaterialTheme.colorScheme.primary
+                                AppThemeMode.SYSTEM -> Icons.Default.BrightnessAuto to MaterialTheme.colorScheme.onSurfaceVariant
+                            }
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = "Alternar Tema de Leitura",
+                                tint = tint
+                            )
+                        }
+
+                        DropdownMenu(
+                            expanded = showThemeMenu,
+                            onDismissRequest = { showThemeMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(
+                                            imageVector = Icons.Default.WbSunny,
+                                            contentDescription = null,
+                                            tint = Color(0xFFD97706),
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text("☀️ Claro (Papel / Sépia)")
+                                    }
+                                },
+                                onClick = {
+                                    viewModel.setThemeMode(AppThemeMode.LIGHT)
+                                    showThemeMenu = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(
+                                            imageVector = Icons.Default.NightsStay,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text("🌙 Escuro (Noturno)")
+                                    }
+                                },
+                                onClick = {
+                                    viewModel.setThemeMode(AppThemeMode.DARK)
+                                    showThemeMenu = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(
+                                            imageVector = Icons.Default.BrightnessAuto,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text("⚙️ Automático (Sistema)")
+                                    }
+                                },
+                                onClick = {
+                                    viewModel.setThemeMode(AppThemeMode.SYSTEM)
+                                    showThemeMenu = false
+                                }
+                            )
+                        }
+                    }
+
                     OutlinedButton(
                         onClick = onMyPlansClick,
                         shape = RoundedCornerShape(20.dp),
@@ -115,6 +205,7 @@ fun HomeScreen(
                         Text("Meus Planos")
                     }
                 },
+
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 )

@@ -8,51 +8,52 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val LightColorScheme = lightColorScheme(
-    primary = ForestGreen,
-    onPrimary = Color.White,
-    primaryContainer = ForestGreenContainerLight,
-    onPrimaryContainer = OnForestGreenContainerLight,
-    secondary = SecondaryTextLight,
-    onSecondary = Color.White,
-    secondaryContainer = MutedCardLight,
-    onSecondaryContainer = OnGeoBackgroundLight,
-    tertiary = ForestGreen,
-    background = GeoBackgroundLight,
-    onBackground = OnGeoBackgroundLight,
-    surface = GeoSurfaceLight,
-    onSurface = OnGeoBackgroundLight,
-    surfaceVariant = MutedCardLight,
-    onSurfaceVariant = SecondaryTextLight,
-    outline = BorderLight
+    primary = ReadingPrimaryLight,
+    onPrimary = ReadingOnPrimaryLight,
+    primaryContainer = ReadingPrimaryContainerLight,
+    onPrimaryContainer = ReadingOnPrimaryContainerLight,
+    secondary = ReadingSecondaryLight,
+    onSecondary = ReadingOnSecondaryLight,
+    secondaryContainer = ReadingSecondaryContainerLight,
+    onSecondaryContainer = ReadingOnSecondaryContainerLight,
+    tertiary = ReadingTertiaryLight,
+    tertiaryContainer = ReadingTertiaryContainerLight,
+    background = ReadingBackgroundLight,
+    onBackground = ReadingOnBackgroundLight,
+    surface = ReadingSurfaceLight,
+    onSurface = ReadingOnBackgroundLight,
+    surfaceVariant = ReadingMutedCardLight,
+    onSurfaceVariant = ReadingSecondaryTextLight,
+    outline = ReadingBorderLight
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = SoftForestDark,
-    onPrimary = Color(0xFF0F2118),
-    primaryContainer = ForestGreenContainerDark,
-    onPrimaryContainer = OnForestGreenContainerDark,
-    secondary = SecondaryTextDark,
-    onSecondary = Color(0xFF0F2118),
-    secondaryContainer = MutedCardDark,
-    onSecondaryContainer = OnGeoBackgroundDark,
-    tertiary = SoftForestDark,
-    background = GeoBackgroundDark,
-    onBackground = OnGeoBackgroundDark,
-    surface = GeoSurfaceDark,
-    onSurface = OnGeoBackgroundDark,
-    surfaceVariant = MutedCardDark,
-    onSurfaceVariant = SecondaryTextDark,
-    outline = BorderDark
+    primary = ReadingPrimaryDark,
+    onPrimary = ReadingOnPrimaryDark,
+    primaryContainer = ReadingPrimaryContainerDark,
+    onPrimaryContainer = ReadingOnPrimaryContainerDark,
+    secondary = ReadingSecondaryDark,
+    onSecondary = ReadingOnSecondaryDark,
+    secondaryContainer = ReadingSecondaryContainerDark,
+    onSecondaryContainer = ReadingOnSecondaryContainerDark,
+    tertiary = ReadingTertiaryDark,
+    tertiaryContainer = ReadingTertiaryContainerDark,
+    background = ReadingBackgroundDark,
+    onBackground = ReadingOnBackgroundDark,
+    surface = ReadingSurfaceDark,
+    onSurface = ReadingOnBackgroundDark,
+    surfaceVariant = ReadingMutedCardDark,
+    onSurfaceVariant = ReadingSecondaryTextDark,
+    outline = ReadingBorderDark
 )
 
 @Composable
 fun PlanoBiblicoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false, // Set false to prioritize our custom warm Bible palette
+    dynamicColor: Boolean = false, // Use our reading-optimized warm paper / night palette
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -70,3 +71,4 @@ fun PlanoBiblicoTheme(
         content = content
     )
 }
+

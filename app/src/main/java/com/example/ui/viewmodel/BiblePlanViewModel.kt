@@ -1,6 +1,7 @@
 package com.example.ui.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,7 @@ import com.example.data.database.AppDatabase
 import com.example.data.model.DailyReading
 import com.example.data.model.ReadingPlan
 import com.example.repository.BiblePlanRepository
+import com.example.ui.theme.AppThemeMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,8 +28,24 @@ import java.util.concurrent.TimeUnit
 class BiblePlanViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: BiblePlanRepository
+    private val prefs = application.getSharedPreferences("bible_plan_prefs", Context.MODE_PRIVATE)
+
+    private val _themeMode = MutableStateFlow(
+        when (prefs.getString("theme_mode", AppThemeMode.SYSTEM.name)) {
+            AppThemeMode.LIGHT.name -> AppThemeMode.LIGHT
+            AppThemeMode.DARK.name -> AppThemeMode.DARK
+            else -> AppThemeMode.SYSTEM
+        }
+    )
+    val themeMode: StateFlow<AppThemeMode> = _themeMode.asStateFlow()
+
+    fun setThemeMode(mode: AppThemeMode) {
+        _themeMode.value = mode
+        prefs.edit().putString("theme_mode", mode.name).apply()
+    }
 
     init {
+
         val database = AppDatabase.getDatabase(application)
         repository = BiblePlanRepository(
             bookDao = database.bookDao(),

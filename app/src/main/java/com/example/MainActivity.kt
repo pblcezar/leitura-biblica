@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,6 +24,7 @@ import com.example.ui.screens.CreatePlanScreen
 import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.MyPlansScreen
 import com.example.ui.screens.PlanDetailsScreen
+import com.example.ui.theme.AppThemeMode
 import com.example.ui.theme.PlanoBiblicoTheme
 import com.example.ui.viewmodel.BiblePlanViewModel
 
@@ -29,9 +33,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PlanoBiblicoTheme {
+            val context = LocalContext.current
+            val application = context.applicationContext as Application
+            val viewModel: BiblePlanViewModel = viewModel(
+                factory = BiblePlanViewModel.Factory(application)
+            )
+
+            val themeMode by viewModel.themeMode.collectAsStateWithLifecycle()
+            val isDarkTheme = when (themeMode) {
+                AppThemeMode.SYSTEM -> isSystemInDarkTheme()
+                AppThemeMode.LIGHT -> false
+                AppThemeMode.DARK -> true
+            }
+
+            PlanoBiblicoTheme(darkTheme = isDarkTheme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    BiblePlanApp()
+                    BiblePlanApp(viewModel = viewModel)
                 }
             }
         }
@@ -39,19 +56,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BiblePlanApp() {
-    val context = LocalContext.current
-    val application = context.applicationContext as Application
-    val viewModel: BiblePlanViewModel = viewModel(
-        factory = BiblePlanViewModel.Factory(application)
-    )
-
+fun BiblePlanApp(viewModel: BiblePlanViewModel) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
     ) {
+
         composable(Screen.Home.route) {
             HomeScreen(
                 viewModel = viewModel,
