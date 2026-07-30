@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp"
+    android:background="@android:color/white">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/widget_app_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="📖 Plano Bíblico"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#2E5B88" />
+
+        <TextView
+            android:id="@+id/widget_day_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DIA 1"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="#2E5B88" />
+    </LinearLayout>
+
+    <!-- Reading Summary -->
+    <TextView
+        android:id="@+id/widget_reading_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Gênesis 1-3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1C1B1F"
+        android:maxLines="2"
+        android:ellipsize="end" />
+
+    <!-- Status Text -->
+    <TextView
+        android:id="@+id/widget_status_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Pendente para hoje"
+        android:textSize="12sp"
+        android:textColor="#757575" />
+
+    <!-- Action Button -->
+    <Button
+        android:id="@+id/widget_btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:text="✓ Marcar como Concluído"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2E5B88" />
+
+</LinearLayout>

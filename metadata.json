@@ -1,0 +1,6 @@
+{
+  "name": "Plano de Leitura Bíblica",
+  "description": "Aplicativo de Plano de Leitura Bíblica completo e offline em Kotlin, Jetpack Compose e Room Database.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
